@@ -5,13 +5,13 @@ box_height = 40;
 frame_thickness = 13;
 
 bar_radius = 15.5/2+.3;
-bar_separation = 49.27;
+bar_separation = 49.27+.75;
 
 belt_mount_length = 5;
 belt_mount_offset = 13.28;
 
 
-platform_mount_height = 5;
+platform_mount_height = 7;
 
 module frame() {
   union() {
@@ -66,50 +66,49 @@ module frame() {
             // bolt holes
             translate([box_width/2-8,belt_mount_length+.25,22])
               rotate(a=[90,0,0])
-                cylinder(h=belt_mount_length+.5,r=1.75);
+                cylinder(h=belt_mount_length+.5,r=1.85);
             translate([box_width/2+8,belt_mount_length+.25,22])
               rotate(a=[90,0,0])
-                cylinder(h=belt_mount_length+.5,r=1.75);
+                cylinder(h=belt_mount_length+.5,r=1.85);
             translate([box_width/2-8,belt_mount_length+.25,13])
               rotate(a=[90,0,0])
-                cylinder(h=belt_mount_length+.5,r=1.75);
+                cylinder(h=belt_mount_length+.5,r=1.85);
             translate([box_width/2+8,belt_mount_length+.25,13])
               rotate(a=[90,0,0])
-                cylinder(h=belt_mount_length+.5,r=1.75);
+                cylinder(h=belt_mount_length+.5,r=1.85);
           }
 
         }
    
     // top nut mounts
-    translate([0,0,box_height-platform_mount_height])
+    translate([-frame_thickness/2-.1,0,box_height-platform_mount_height])
       difference() {
-        cube(size=[frame_thickness+2.5,frame_thickness+2.5,platform_mount_height]);
-        translate([10, 10, -.25])
-          cylinder(h=platform_mount_height +0.5,r=1.7);
+        cube(size=[frame_thickness,frame_thickness+2.5,platform_mount_height]);
+        translate([3, 5, -.25])
+          cylinder(h=platform_mount_height +0.5,r=1.8);
       }
 
-    translate([box_width,0,box_height-platform_mount_height])
-      rotate(a=[0,0,90])
-        difference() {
-          cube(size=[frame_thickness+2.5,frame_thickness+2.5,platform_mount_height]);
-          translate([10, 10, -.25])
-            cylinder(h=platform_mount_height +0.5,r=1.7);
-        }
+    translate([-frame_thickness/2-.1,box_length-frame_thickness-2.5,box_height-platform_mount_height])
+      difference() {
+        cube(size=[frame_thickness,frame_thickness+2.5,platform_mount_height]);
+        translate([3, frame_thickness+2.5-5, -.25])
+          cylinder(h=platform_mount_height +0.5,r=1.8);
+      }
 
-    translate([box_width,box_length,box_height-platform_mount_height])
+    translate([box_width+frame_thickness/2+.1,frame_thickness+2.5,box_height-platform_mount_height])
       rotate(a=[0,0,180])
         difference() {
-          cube(size=[frame_thickness+2.5,frame_thickness+2.5,platform_mount_height]);
-          translate([10, 10, -.25])
-            cylinder(h=platform_mount_height +0.5,r=1.7);
+          cube(size=[frame_thickness,frame_thickness+2.5,platform_mount_height]);
+          translate([3, frame_thickness+2.5-5, -.25])
+            cylinder(h=platform_mount_height +0.5,r=1.8);
         }
 
-    translate([0,box_length,box_height-platform_mount_height])
-      rotate(a=[0,0,270])
+    translate([box_width+frame_thickness/2+.1,box_length,box_height-platform_mount_height])
+      rotate(a=[0,0,180])
         difference() {
-          cube(size=[frame_thickness+2.5,frame_thickness+2.5,platform_mount_height]);
-          translate([10, 10, -.25])
-            cylinder(h=platform_mount_height +0.5,r=1.7);
+          cube(size=[frame_thickness,frame_thickness+2.5,platform_mount_height]);
+          translate([3, 5, -.25])
+            cylinder(h=platform_mount_height +0.5,r=1.8);
         }
   }
 }
@@ -118,12 +117,14 @@ difference() {
   frame();
   
   // axle punchouts
-  translate([-.25,box_length/2+bar_separation/2,10])
+  translate([-.25,box_length/2+bar_separation/2,11])
     rotate(a=[0,90,0])
-      cylinder(h=box_width+.5, r=bar_radius);
-  translate([-.25,box_length/2-bar_separation/2,10])
+      scale([1,16/15.4,1])
+        cylinder(h=box_width+.5, r=bar_radius);
+  translate([-.25,box_length/2-bar_separation/2,11])
     rotate(a=[0,90,0])
-      cylinder(h=box_width+.5, r=bar_radius);
+      scale([1,16/15.4,1])
+        cylinder(h=box_width+.5, r=bar_radius);
 
   // belt punchouts
   translate([-.25,box_length/2+bar_separation/2,0]) {
